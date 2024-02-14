@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hewen.mappers.DataMapper">
+
+
+
+    <delete id="deleteAllUsers">
+        DELETE FROM Users;
+    </delete>
+    <delete id="deleteAllQuestions">
+        DELETE FROM Questions;
+    </delete>
+    <delete id="deleteAllQuestionImages">
+        DELETE FROM QuestionImages;
+    </delete>
+    <delete id="deleteAllComments">
+        DELETE FROM Comments;
+    </delete>
+    <delete id="deleteAllCommentImages">
+        DELETE FROM CommentImages;
+    </delete>
+
+</mapper>

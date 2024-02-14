@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    {
+      "id": "node1",
+      "name": "张三",
+      "type": "Person",
+      "attributes": "人个人"
+    },
+    {
+      "id": "node2",
+      "name": "5三",
+      "type": "Person",
+      "attributes": "电话他电话"
+    },
+    {
+      "id": "node3",
+      "name": "三",
+      "type": "Organization",
+      "attributes": "冬天很多人挺好"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "node1",
+      "target": "node2",
+      "type": "Colleague",
+      "attributes": "会让他的"
+    },
+    {
+      "source": "node1",
+      "target": "node3",
+      "type": "Employee",
+      "attributes": "电话他然后"
+    }
+  ]
+}

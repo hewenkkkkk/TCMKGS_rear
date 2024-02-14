@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hewen.mappers.QuestionimagesMapper">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="com.hewen.entity.po.Questionimages">
+		<!--图片的唯一标识-->
+		<result column="image_id" property="imageId"  />
+		<!--关联的问题ID-->
+		<result column="question_id" property="questionId"  />
+		<!--图片链接-->
+		<result column="image_url" property="imageUrl"  />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="base_column_list">
+		 image_id,question_id,image_url
+	</sql>
+
+	<sql id="base_condition_filed">
+			<if test="query.imageId != null and query.imageId!=''">
+				 and  image_id = #{query.imageId}
+			</if>
+			<if test="query.questionId != null and query.questionId!=''">
+				 and  question_id = #{query.questionId}
+			</if>
+			<if test="query.imageUrl != null and query.imageUrl!=''">
+				 and  image_url = #{query.imageUrl}
+			</if>
+	</sql>
+	<!-- 通用条件列-->
+	<sql id="base_condition">
+	 <where>
+		 <include refid="base_condition_filed" />
+	 </where>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+	 <where>
+			<include refid="base_condition_filed" />
+			<if test="query.imageIdFuzzy!= null  and query.imageIdFuzzy!=''">
+				 and  image_id like concat('%', #{query.imageIdFuzzy}, '%')
+			</if>
+			<if test="query.questionIdFuzzy!= null  and query.questionIdFuzzy!=''">
+				 and  question_id like concat('%', #{query.questionIdFuzzy}, '%')
+			</if>
+			<if test="query.imageUrlFuzzy!= null  and query.imageUrlFuzzy!=''">
+				 and  image_url like concat('%', #{query.imageUrlFuzzy}, '%')
+			</if>
+	 </where>
+	</sql>
+
+	<!-- 查询集合-->
+	<select id="selectList" resultMap="base_result_map" >
+		 SELECT <include refid="base_column_list" /> FROM questionimages <include refid="query_condition" />
+		 <if test="query.orderBy!=null">
+			 order by ${query.orderBy}
+		 </if>
+		 <if test="query.simplePage!=null">
+			 limit #{query.simplePage.start},#{query.simplePage.end}
+		 </if>
+	</select>
+
+	<!-- 查询数量-->
+	<select id="selectCount" resultType="java.lang.Integer" >
+		 SELECT count(1) FROM questionimages <include refid="query_condition" />
+	</select>
+
+	<!-- 插入 （匹配有值的字段）-->
+	<insert id="insert" parameterType="com.hewen.entity.po.Questionimages">
+		 INSERT INTO questionimages
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="bean.imageId != null">
+				 image_id,
+			</if>
+			<if test="bean.questionId != null">
+				 question_id,
+			</if>
+			<if test="bean.imageUrl != null">
+				 image_url,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="bean.imageId!=null">
+				 #{bean.imageId},
+			</if>
+			<if test="bean.questionId!=null">
+				 #{bean.questionId},
+			</if>
+			<if test="bean.imageUrl!=null">
+				 #{bean.imageUrl},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 插入或者更新 （匹配有值的字段）-->
+	<insert id="insertOrUpdate" parameterType="com.hewen.entity.po.Questionimages">
+		 INSERT INTO questionimages
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.imageId != null">
+				 image_id,
+			</if>
+			<if test="bean.questionId != null">
+				 question_id,
+			</if>
+			<if test="bean.imageUrl != null">
+				 image_url,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.imageId!=null">
+				 #{bean.imageId},
+			</if>
+			<if test="bean.questionId!=null">
+				 #{bean.questionId},
+			</if>
+			<if test="bean.imageUrl!=null">
+				 #{bean.imageUrl},
+			</if>
+		 </trim>
+		 on DUPLICATE key update 
+		 <trim prefix="" suffix="" suffixOverrides=",">
+			<if test="bean.imageId!=null">
+				 image_id = VALUES(image_id),
+			</if>
+			<if test="bean.questionId!=null">
+				 question_id = VALUES(question_id),
+			</if>
+			<if test="bean.imageUrl!=null">
+				 image_url = VALUES(image_url),
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 （批量插入）-->
+	<insert id="insertBatch" parameterType="com.hewen.entity.po.Questionimages">
+		 INSERT INTO questionimages(
+			 image_id,
+			 question_id,
+			 image_url
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.imageId},
+				 #{item.questionId},
+				 #{item.imageUrl}
+			 )
+		 </foreach>
+	</insert>
+
+	<!-- 批量新增修改 （批量插入）-->
+	<insert id="insertOrUpdateBatch" parameterType="com.hewen.entity.po.Questionimages">
+		 INSERT INTO questionimages(
+			 image_id,
+			 question_id,
+			 image_url
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.imageId},
+				 #{item.questionId},
+				 #{item.imageUrl}
+			 )
+		 </foreach>
+			on DUPLICATE key update 
+			image_id = VALUES(image_id),
+			question_id = VALUES(question_id),
+			image_url = VALUES(image_url)
+	</insert>
+
+	<!-- 根据ImageId修改-->
+	<update id="updateByImageId" parameterType="com.hewen.entity.po.Questionimages">
+		 UPDATE questionimages
+ 		 <set> 
+			<if test="bean.questionId != null">
+				 question_id = #{bean.questionId},
+			</if>
+			<if test="bean.imageUrl != null">
+				 image_url = #{bean.imageUrl},
+			</if>
+ 		 </set>
+ 		 where image_id=#{imageId}
+	</update>
+
+	<!-- 根据ImageId删除-->
+	<delete id="deleteByImageId">
+		delete from questionimages where image_id=#{imageId}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectByImageId" resultMap="base_result_map" >
+		select <include refid="base_column_list" /> from questionimages where image_id=#{imageId}
+	</select>
+
+</mapper>

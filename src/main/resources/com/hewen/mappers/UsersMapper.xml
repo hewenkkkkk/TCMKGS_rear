@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hewen.mappers.UsersMapper">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="com.hewen.entity.po.Users">
+		<!--用户的唯一标识-->
+		<result column="user_id" property="userId"  />
+		<!--随机生成的用户名-->
+		<result column="username" property="username"  />
+		<!--基于用户名首字母生成的头像URL-->
+		<result column="avatar" property="avatar"  />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="base_column_list">
+		 user_id,username,avatar
+	</sql>
+
+	<sql id="base_condition_filed">
+			<if test="query.userId != null and query.userId!=''">
+				 and  user_id = #{query.userId}
+			</if>
+			<if test="query.username != null and query.username!=''">
+				 and  username = #{query.username}
+			</if>
+			<if test="query.avatar != null and query.avatar!=''">
+				 and  avatar = #{query.avatar}
+			</if>
+	</sql>
+	<!-- 通用条件列-->
+	<sql id="base_condition">
+	 <where>
+		 <include refid="base_condition_filed" />
+	 </where>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+	 <where>
+			<include refid="base_condition_filed" />
+			<if test="query.userIdFuzzy!= null  and query.userIdFuzzy!=''">
+				 and  user_id like concat('%', #{query.userIdFuzzy}, '%')
+			</if>
+			<if test="query.usernameFuzzy!= null  and query.usernameFuzzy!=''">
+				 and  username like concat('%', #{query.usernameFuzzy}, '%')
+			</if>
+			<if test="query.avatarFuzzy!= null  and query.avatarFuzzy!=''">
+				 and  avatar like concat('%', #{query.avatarFuzzy}, '%')
+			</if>
+	 </where>
+	</sql>
+
+	<!-- 查询集合-->
+	<select id="selectList" resultMap="base_result_map" >
+		 SELECT <include refid="base_column_list" /> FROM users <include refid="query_condition" />
+		 <if test="query.orderBy!=null">
+			 order by ${query.orderBy}
+		 </if>
+		 <if test="query.simplePage!=null">
+			 limit #{query.simplePage.start},#{query.simplePage.end}
+		 </if>
+	</select>
+
+	<!-- 查询数量-->
+	<select id="selectCount" resultType="java.lang.Integer" >
+		 SELECT count(1) FROM users <include refid="query_condition" />
+	</select>
+
+	<!-- 插入 （匹配有值的字段）-->
+	<insert id="insert" parameterType="com.hewen.entity.po.Users">
+		 INSERT INTO users
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="bean.userId != null">
+				 user_id,
+			</if>
+			<if test="bean.username != null">
+				 username,
+			</if>
+			<if test="bean.avatar != null">
+				 avatar,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="bean.userId!=null">
+				 #{bean.userId},
+			</if>
+			<if test="bean.username!=null">
+				 #{bean.username},
+			</if>
+			<if test="bean.avatar!=null">
+				 #{bean.avatar},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 插入或者更新 （匹配有值的字段）-->
+	<insert id="insertOrUpdate" parameterType="com.hewen.entity.po.Users">
+		 INSERT INTO users
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.userId != null">
+				 user_id,
+			</if>
+			<if test="bean.username != null">
+				 username,
+			</if>
+			<if test="bean.avatar != null">
+				 avatar,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.userId!=null">
+				 #{bean.userId},
+			</if>
+			<if test="bean.username!=null">
+				 #{bean.username},
+			</if>
+			<if test="bean.avatar!=null">
+				 #{bean.avatar},
+			</if>
+		 </trim>
+		 on DUPLICATE key update 
+		 <trim prefix="" suffix="" suffixOverrides=",">
+			<if test="bean.userId!=null">
+				 user_id = VALUES(user_id),
+			</if>
+			<if test="bean.username!=null">
+				 username = VALUES(username),
+			</if>
+			<if test="bean.avatar!=null">
+				 avatar = VALUES(avatar),
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 （批量插入）-->
+	<insert id="insertBatch" parameterType="com.hewen.entity.po.Users">
+		 INSERT INTO users(
+			 user_id,
+			 username,
+			 avatar
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.userId},
+				 #{item.username},
+				 #{item.avatar}
+			 )
+		 </foreach>
+	</insert>
+
+	<!-- 批量新增修改 （批量插入）-->
+	<insert id="insertOrUpdateBatch" parameterType="com.hewen.entity.po.Users">
+		 INSERT INTO users(
+			 user_id,
+			 username,
+			 avatar
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.userId},
+				 #{item.username},
+				 #{item.avatar}
+			 )
+		 </foreach>
+			on DUPLICATE key update 
+			user_id = VALUES(user_id),
+			username = VALUES(username),
+			avatar = VALUES(avatar)
+	</insert>
+
+	<!-- 根据UserId修改-->
+	<update id="updateByUserId" parameterType="com.hewen.entity.po.Users">
+		 UPDATE users
+ 		 <set> 
+			<if test="bean.username != null">
+				 username = #{bean.username},
+			</if>
+			<if test="bean.avatar != null">
+				 avatar = #{bean.avatar},
+			</if>
+ 		 </set>
+ 		 where user_id=#{userId}
+	</update>
+
+	<!-- 根据UserId删除-->
+	<delete id="deleteByUserId">
+		delete from users where user_id=#{userId}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectByUserId" resultType="com.hewen.entity.vo.que.UserVo" >
+		SELECT <include refid="base_column_list" /> FROM users where user_id=#{userId}
+	</select>
+
+</mapper>

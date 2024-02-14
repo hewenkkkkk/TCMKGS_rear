@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hewen.mappers.CommentsMapper">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="com.hewen.entity.po.Comments">
+		<!--评论的唯一标识-->
+		<result column="comment_id" property="commentId"  />
+		<!--所评论的问题ID-->
+		<result column="question_id" property="questionId"  />
+		<!--评论者的用户ID-->
+		<result column="user_id" property="userId"  />
+		<!--提问者的邮箱地址-->
+		<result column="email" property="email"  />
+		<!--评论内容-->
+		<result column="content" property="content"  />
+		<!--评论创建时间-->
+		<result column="created_at" property="createdAt"  />
+		<!--父评论ID，用于二级评论-->
+		<result column="parent_id" property="parentId"  />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="base_column_list">
+		 comment_id,question_id,user_id,content,email,
+		 created_at,parent_id
+	</sql>
+
+	<sql id="base_condition_filed">
+			<if test="query.commentId != null and query.commentId!=''">
+				 and  comment_id = #{query.commentId}
+			</if>
+			<if test="query.questionId != null and query.questionId!=''">
+				 and  question_id = #{query.questionId}
+			</if>
+			<if test="query.userId != null and query.userId!=''">
+				 and  user_id = #{query.userId}
+			</if>
+		    <if test="query.email != null and query.email!=''">
+			and  email = #{query.email}
+		    </if>
+			<if test="query.content != null and query.content!=''">
+				 and  content = #{query.content}
+			</if>
+			<if test="query.createdAt != null and query.createdAt!=''">
+				 <![CDATA[ and  created_at=str_to_date(#{query.createdAt}, '%Y-%m-%d') ]]>
+			</if>
+			<if test="query.parentId != null and query.parentId!=''">
+				 and  parent_id = #{query.parentId}
+			</if>
+	</sql>
+	<!-- 通用条件列-->
+	<sql id="base_condition">
+	 <where>
+		 <include refid="base_condition_filed" />
+	 </where>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+	 <where>
+			<include refid="base_condition_filed" />
+			<if test="query.commentIdFuzzy!= null  and query.commentIdFuzzy!=''">
+				 and  comment_id like concat('%', #{query.commentIdFuzzy}, '%')
+			</if>
+			<if test="query.questionIdFuzzy!= null  and query.questionIdFuzzy!=''">
+				 and  question_id like concat('%', #{query.questionIdFuzzy}, '%')
+			</if>
+		    <if test="query.emailFuzzy!= null  and query.emailFuzzy!=''">
+			     and  email like concat('%', #{query.emailFuzzy}, '%')
+		    </if>
+			<if test="query.userIdFuzzy!= null  and query.userIdFuzzy!=''">
+				 and  user_id like concat('%', #{query.userIdFuzzy}, '%')
+			</if>
+			<if test="query.contentFuzzy!= null  and query.contentFuzzy!=''">
+				 and  content like concat('%', #{query.contentFuzzy}, '%')
+			</if>
+			<if test="query.createdAtStart!= null and query.createdAtStart!=''">
+				 <![CDATA[ and  created_at>=str_to_date(#{query.createdAtStart}, '%Y-%m-%d') ]]>
+			</if>
+			<if test="query.createdAtEnd!= null and query.createdAtEnd!=''">
+				 <![CDATA[ and  created_at< date_sub(str_to_date(#{query.createdAtEnd},'%Y-%m-%d'),interval -1 day) ]]>
+			</if>
+			<if test="query.parentIdFuzzy!= null  and query.parentIdFuzzy!=''">
+				 and  parent_id like concat('%', #{query.parentIdFuzzy}, '%')
+			</if>
+	 </where>
+	</sql>
+
+	<!-- 查询集合-->
+	<select id="selectList" resultMap="base_result_map" >
+		 SELECT <include refid="base_column_list" /> FROM comments <include refid="query_condition" />
+		 <if test="query.orderBy!=null">
+			 order by ${query.orderBy}
+		 </if>
+		 <if test="query.simplePage!=null">
+			 limit #{query.simplePage.start},#{query.simplePage.end}
+		 </if>
+	</select>
+
+	<!-- 查询数量-->
+	<select id="selectCount" resultType="java.lang.Integer" >
+		 SELECT count(1) FROM comments <include refid="query_condition" />
+	</select>
+
+	<!-- 插入 （匹配有值的字段）-->
+	<insert id="insert" parameterType="com.hewen.entity.po.Comments">
+		 INSERT INTO comments
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="bean.commentId != null">
+				 comment_id,
+			</if>
+			<if test="bean.questionId != null">
+				 question_id,
+			</if>
+
+			<if test="bean.userId != null">
+				 user_id,
+			</if>
+			<if test="bean.content != null">
+				 content,
+			</if>
+			<if test="bean.createdAt != null">
+				 created_at,
+			</if>
+			<if test="bean.parentId != null">
+				 parent_id,
+			</if>
+			 <if test="bean.email != null">
+				 email,
+			 </if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="bean.commentId!=null">
+				 #{bean.commentId},
+			</if>
+			<if test="bean.questionId!=null">
+				 #{bean.questionId},
+			</if>
+			<if test="bean.userId!=null">
+				 #{bean.userId},
+			</if>
+
+			<if test="bean.content!=null">
+				 #{bean.content},
+			</if>
+			<if test="bean.createdAt!=null">
+				 #{bean.createdAt},
+			</if>
+			<if test="bean.parentId!=null">
+				 #{bean.parentId},
+			</if>
+			 <if test="bean.email!=null">
+				 #{bean.email},
+			 </if>
+		 </trim>
+	</insert>
+
+	<!-- 插入或者更新 （匹配有值的字段）-->
+	<insert id="insertOrUpdate" parameterType="com.hewen.entity.po.Comments">
+		 INSERT INTO comments
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.commentId != null">
+				 comment_id,
+			</if>
+			<if test="bean.questionId != null">
+				 question_id,
+			</if>
+			<if test="bean.userId != null">
+				 user_id,
+			</if>
+
+			<if test="bean.content != null">
+				 content,
+			</if>
+			<if test="bean.createdAt != null">
+				 created_at,
+			</if>
+			<if test="bean.parentId != null">
+				 parent_id,
+			</if>
+			 <if test="bean.email != null">
+				 email,
+			 </if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.commentId!=null">
+				 #{bean.commentId},
+			</if>
+			<if test="bean.questionId!=null">
+				 #{bean.questionId},
+			</if>
+			 <if test="bean.userId!=null">
+				 #{bean.userId},
+			 </if>
+
+			<if test="bean.content!=null">
+				 #{bean.content},
+			</if>
+			<if test="bean.createdAt!=null">
+				 #{bean.createdAt},
+			</if>
+			<if test="bean.parentId!=null">
+				 #{bean.parentId},
+			</if>
+			 <if test="bean.email!=null">
+				 #{bean.email},
+			 </if>
+		 </trim>
+		 on DUPLICATE key update 
+		 <trim prefix="" suffix="" suffixOverrides=",">
+			<if test="bean.commentId!=null">
+				 comment_id = VALUES(comment_id),
+			</if>
+			<if test="bean.questionId!=null">
+				 question_id = VALUES(question_id),
+			</if>
+			<if test="bean.userId!=null">
+				 user_id = VALUES(user_id),
+			</if>
+
+			<if test="bean.content!=null">
+				 content = VALUES(content),
+			</if>
+			<if test="bean.createdAt!=null">
+				 created_at = VALUES(created_at),
+			</if>
+			<if test="bean.parentId!=null">
+				 parent_id = VALUES(parent_id),
+			</if>
+			 <if test="bean.email!=null">
+				 email = VALUES(email),
+			 </if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 （批量插入）-->
+	<insert id="insertBatch" parameterType="com.hewen.entity.po.Comments">
+		 INSERT INTO comments(
+			 comment_id,
+			 question_id,
+			 user_id,
+		     email,
+			 content,
+			 created_at,
+			 parent_id
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.commentId},
+				 #{item.questionId},
+				 #{item.userId},
+			     #{item.email},
+				 #{item.content},
+				 #{item.createdAt},
+				 #{item.parentId}
+			 )
+		 </foreach>
+	</insert>
+
+	<!-- 批量新增修改 （批量插入）-->
+	<insert id="insertOrUpdateBatch" parameterType="com.hewen.entity.po.Comments">
+		 INSERT INTO comments(
+			 comment_id,
+			 question_id,
+			 user_id,
+		     email,
+			 content,
+			 created_at,
+			 parent_id
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.commentId},
+				 #{item.questionId},
+				 #{item.userId},
+			     #{item.email},
+				 #{item.content},
+				 #{item.createdAt},
+				 #{item.parentId}
+			 )
+		 </foreach>
+			on DUPLICATE key update 
+			comment_id = VALUES(comment_id),
+			question_id = VALUES(question_id),
+			user_id = VALUES(user_id),
+		    email = VALUES(email),
+			content = VALUES(content),
+			created_at = VALUES(created_at),
+			parent_id = VALUES(parent_id)
+	</insert>
+
+    <insert id="addSubComment"><![CDATA[
+		INSERT INTO comments(
+			comment_id,
+			 user_id,
+		     email,
+			 content,
+			 created_at,
+			 parent_id
+		 )values
+			 (
+			  	#{commentId},
+				 #{userId},
+			     #{email},
+				 #{content},
+				 #{createdAt},
+				 #{parentId}
+			 )
+	]]></insert>
+
+    <!-- 根据CommentId修改-->
+	<update id="updateByCommentId" parameterType="com.hewen.entity.po.Comments">
+		 UPDATE comments
+ 		 <set> 
+			<if test="bean.questionId != null">
+				 question_id = #{bean.questionId},
+			</if>
+			<if test="bean.userId != null">
+				 user_id = #{bean.userId},
+			</if>
+			 <if test="bean.email != null">
+				 email = #{bean.email},
+			 </if>
+			<if test="bean.content != null">
+				 content = #{bean.content},
+			</if>
+			<if test="bean.createdAt != null">
+				 created_at = #{bean.createdAt},
+			</if>
+			<if test="bean.parentId != null">
+				 parent_id = #{bean.parentId},
+			</if>
+ 		 </set>
+ 		 where comment_id=#{commentId}
+	</update>
+
+	<!-- 根据CommentId删除-->
+	<delete id="deleteByCommentId">
+		delete from comments where comment_id=#{commentId}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectByCommentId" resultMap="base_result_map" >
+		select <include refid="base_column_list" /> from comments where comment_id=#{commentId}
+	</select>
+
+</mapper>

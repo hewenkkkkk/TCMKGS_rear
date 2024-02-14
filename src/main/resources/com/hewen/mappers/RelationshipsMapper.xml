@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hewen.mappers.RelationshipsMapper">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="com.hewen.entity.po.Relationships">
+		<!---->
+		<id column="id" property="id"  />
+		<!---->
+		<result column="source" property="source"  />
+		<!---->
+		<result column="target" property="target"  />
+		<!---->
+		<result column="type" property="type"  />
+		<!---->
+		<result column="attributes" property="attributes"  />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="base_column_list">
+		id,source,target,type,attributes
+
+	</sql>
+
+	<sql id="base_condition_filed">
+		<if test="query.id != null">
+			and  id = #{query.id}
+		</if>
+		<if test="query.source != null and query.source!=''">
+			and  source = #{query.source}
+		</if>
+		<if test="query.target != null and query.target!=''">
+			and  target = #{query.target}
+		</if>
+		<if test="query.type != null and query.type!=''">
+			and  type = #{query.type}
+		</if>
+		<if test="query.attributes != null and query.attributes!=''">
+			and  attributes = #{query.attributes}
+		</if>
+	</sql>
+	<!-- 通用条件列-->
+	<sql id="base_condition">
+		<where>
+			<include refid="base_condition_filed" />
+		</where>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+		<where>
+			<include refid="base_condition_filed" />
+			<if test="query.sourceFuzzy!= null  and query.sourceFuzzy!=''">
+				and  source like concat('%', #{query.sourceFuzzy}, '%')
+			</if>
+			<if test="query.targetFuzzy!= null  and query.targetFuzzy!=''">
+				and  target like concat('%', #{query.targetFuzzy}, '%')
+			</if>
+			<if test="query.typeFuzzy!= null  and query.typeFuzzy!=''">
+				and  type like concat('%', #{query.typeFuzzy}, '%')
+			</if>
+			<if test="query.attributesFuzzy!= null  and query.attributesFuzzy!=''">
+				and  attributes like concat('%', #{query.attributesFuzzy}, '%')
+			</if>
+		</where>
+	</sql>
+
+	<!-- 查询集合-->
+	<select id="selectList" resultMap="base_result_map" >
+		SELECT <include refid="base_column_list" /> FROM relationships <include refid="query_condition" />
+		<if test="query.orderBy!=null">
+			order by ${query.orderBy}
+		</if>
+		<if test="query.simplePage!=null">
+			limit #{query.simplePage.start},#{query.simplePage.end}
+		</if>
+	</select>
+
+	<!-- 查询数量-->
+	<select id="selectCount" resultType="java.lang.Integer" >
+		SELECT count(1) FROM relationships <include refid="query_condition" />
+	</select>
+
+	<!-- 插入 （匹配有值的字段）-->
+	<insert id="insert" parameterType="com.hewen.entity.po.Relationships">
+		<selectKey keyProperty="bean.id" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO relationships
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="bean.source != null">
+				source,
+			</if>
+			<if test="bean.target != null">
+				target,
+			</if>
+			<if test="bean.type != null">
+				type,
+			</if>
+			<if test="bean.attributes != null">
+				attributes,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="bean.source!=null">
+				#{bean.source},
+			</if>
+			<if test="bean.target!=null">
+				#{bean.target},
+			</if>
+			<if test="bean.type!=null">
+				#{bean.type},
+			</if>
+			<if test="bean.attributes!=null">
+				#{bean.attributes},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 插入或者更新 （匹配有值的字段）-->
+	<insert id="insertOrUpdate" parameterType="com.hewen.entity.po.Relationships">
+		INSERT INTO relationships
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.id != null">
+				id,
+			</if>
+			<if test="bean.source != null">
+				source,
+			</if>
+			<if test="bean.target != null">
+				target,
+			</if>
+			<if test="bean.type != null">
+				type,
+			</if>
+			<if test="bean.attributes != null">
+				attributes,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.id!=null">
+				#{bean.id},
+			</if>
+			<if test="bean.source!=null">
+				#{bean.source},
+			</if>
+			<if test="bean.target!=null">
+				#{bean.target},
+			</if>
+			<if test="bean.type!=null">
+				#{bean.type},
+			</if>
+			<if test="bean.attributes!=null">
+				#{bean.attributes},
+			</if>
+		</trim>
+		on DUPLICATE key update
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="bean.source!=null">
+				source = VALUES(source),
+			</if>
+			<if test="bean.target!=null">
+				target = VALUES(target),
+			</if>
+			<if test="bean.type!=null">
+				type = VALUES(type),
+			</if>
+			<if test="bean.attributes!=null">
+				attributes = VALUES(attributes),
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 添加 （批量插入）-->
+	<insert id="insertBatch" parameterType="com.hewen.entity.po.Relationships" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO relationships(
+		source,
+		target,
+		type,
+		attributes
+		)values
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.source},
+			#{item.target},
+			#{item.type},
+			#{item.attributes}
+			)
+		</foreach>
+	</insert>
+
+	<!-- 批量新增修改 （批量插入）-->
+	<insert id="insertOrUpdateBatch" parameterType="com.hewen.entity.po.Relationships">
+		INSERT INTO relationships(
+		source,
+		target,
+		type,
+		attributes
+		)values
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.source},
+			#{item.target},
+			#{item.type},
+			#{item.attributes}
+			)
+		</foreach>
+		on DUPLICATE key update
+		source = VALUES(source),
+		target = VALUES(target),
+		type = VALUES(type),
+		attributes = VALUES(attributes)
+	</insert>
+
+	<!--多条件修改-->
+	<update id="updateByParam" parameterType="com.hewen.entity.query.RelationshipsQuery">
+		UPDATE relationships
+		<set>
+			<if test="bean.source != null">
+				source = #{bean.source},
+			</if>
+			<if test="bean.target != null">
+				target = #{bean.target},
+			</if>
+			<if test="bean.type != null">
+				type = #{bean.type},
+			</if>
+			<if test="bean.attributes != null">
+				attributes = #{bean.attributes},
+			</if>
+		</set>
+		<include refid="query_condition" />
+	</update>
+
+	<!--多条件删除-->
+	<delete id="deleteByParam">
+		delete from relationships
+		<include refid="query_condition" />
+	</delete>
+
+	<!-- 根据Id修改-->
+	<update id="updateById" parameterType="com.hewen.entity.po.Relationships">
+		UPDATE relationships
+		<set>
+			<if test="bean.source != null">
+				source = #{bean.source},
+			</if>
+			<if test="bean.target != null">
+				target = #{bean.target},
+			</if>
+			<if test="bean.type != null">
+				type = #{bean.type},
+			</if>
+			<if test="bean.attributes != null">
+				attributes = #{bean.attributes},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<!-- 根据Id删除-->
+	<delete id="deleteById">
+		delete from relationships where id=#{id}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectById" resultMap="base_result_map" >
+		select <include refid="base_column_list" /> from relationships where id=#{id}
+	</select>
+
+	<select id="countRelationships" resultType="Long">
+		SELECT COUNT(*) FROM  relationships ;
+	</select>
+
+	<select id="countRelationshipType" resultType="java.util.Map">
+		SELECT type, COUNT(*) AS count
+		FROM relationships
+		GROUP BY type
+	</select>
+
+</mapper>

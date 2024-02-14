@@ -1,0 +1,481 @@
+{
+  "nodes": [
+    {
+      "id": "node1",
+      "name": "Name1",
+      "imgUrl": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+      "type": "Organization",
+      "attributes": "Attributes1"
+    },
+    {
+      "id": "node2",
+      "name": "Name2",
+      "type": "Person",
+      "attributes": "Attributes2"
+    },
+    {
+      "id": "node3",
+      "name": "Name3",
+      "type": "Person",
+      "attributes": "Attributes3"
+    },
+    {
+      "id": "node4",
+      "name": "Name4",
+      "type": "Person",
+      "attributes": "Attributes4"
+    },
+    {
+      "id": "node5",
+      "name": "Name5",
+      "type": "Person",
+      "attributes": "Attributes5"
+    },
+    {
+      "id": "node6",
+      "name": "Name6",
+      "type": "Person",
+      "attributes": "Attributes6"
+    },
+    {
+      "id": "node7",
+      "name": "Name7",
+      "type": "Person",
+      "attributes": "Attributes7"
+    },
+    {
+      "id": "node8",
+      "name": "Name8",
+      "type": "Organization",
+      "attributes": "Attributes8"
+    },
+    {
+      "id": "node9",
+      "name": "Name9",
+      "type": "Person",
+      "attributes": "Attributes9"
+    },
+    {
+      "id": "node10",
+      "name": "Name10",
+      "type": "Person",
+      "attributes": "Attributes10"
+    },
+    {
+      "id": "node11",
+      "name": "Name11",
+      "type": "Organization",
+      "attributes": "Attributes11"
+    },
+    {
+      "id": "node12",
+      "name": "Name12",
+      "type": "Person",
+      "attributes": "Attributes12"
+    },
+    {
+      "id": "node13",
+      "name": "Name13",
+      "type": "Person",
+      "attributes": "Attributes13"
+    },
+    {
+      "id": "node14",
+      "name": "Name14",
+      "type": "Person",
+      "attributes": "Attributes14"
+    },
+    {
+      "id": "node15",
+      "name": "Name15",
+      "type": "Organization",
+      "attributes": "Attributes15"
+    },
+    {
+      "id": "node16",
+      "name": "Name16",
+      "type": "Person",
+      "attributes": "Attributes16"
+    },
+    {
+      "id": "node17",
+      "name": "Name17",
+      "type": "Person",
+      "attributes": "Attributes17"
+    },
+    {
+      "id": "node18",
+      "name": "Name18",
+      "type": "Person",
+      "attributes": "Attributes18"
+    },
+    {
+      "id": "node19",
+      "name": "Name19",
+      "type": "Organization",
+      "attributes": "Attributes19"
+    },
+    {
+      "id": "node20",
+      "name": "Name20",
+      "type": "Organization",
+      "attributes": "Attributes20"
+    },
+    {
+      "id": "node21",
+      "name": "Name21",
+      "type": "Organization",
+      "attributes": "Attributes21"
+    },
+    {
+      "id": "node22",
+      "name": "Name22",
+      "type": "Organization",
+      "attributes": "Attributes22"
+    },
+    {
+      "id": "node23",
+      "name": "Name23",
+      "type": "Person",
+      "attributes": "Attributes23"
+    },
+    {
+      "id": "node24",
+      "name": "Name24",
+      "type": "Person",
+      "attributes": "Attributes24"
+    },
+    {
+      "id": "node25",
+      "name": "Name25",
+      "type": "Organization",
+      "attributes": "Attributes25"
+    },
+    {
+      "id": "node26",
+      "name": "Name26",
+      "type": "Organization",
+      "attributes": "Attributes26"
+    },
+    {
+      "id": "node27",
+      "name": "Name27",
+      "type": "Person",
+      "attributes": "Attributes27"
+    },
+    {
+      "id": "node28",
+      "name": "Name28",
+      "type": "Person",
+      "attributes": "Attributes28"
+    },
+    {
+      "id": "node29",
+      "name": "Name29",
+      "type": "Person",
+      "attributes": "Attributes29"
+    },
+    {
+      "id": "node30",
+      "name": "Name30",
+      "type": "Organization",
+      "attributes": "Attributes30"
+    },
+    {
+      "id": "node31",
+      "name": "Name31",
+      "type": "Organization",
+      "attributes": "Attributes31"
+    },
+    {
+      "id": "node32",
+      "name": "Name32",
+      "type": "Organization",
+      "attributes": "Attributes32"
+    },
+    {
+      "id": "node33",
+      "name": "Name33",
+      "type": "Person",
+      "attributes": "Attributes33"
+    },
+    {
+      "id": "node34",
+      "name": "Name34",
+      "type": "Person",
+      "attributes": "Attributes34"
+    },
+    {
+      "id": "node35",
+      "name": "Name35",
+      "type": "Organization",
+      "attributes": "Attributes35"
+    },
+    {
+      "id": "node36",
+      "name": "Name36",
+      "type": "Person",
+      "attributes": "Attributes36"
+    },
+    {
+      "id": "node37",
+      "name": "Name37",
+      "type": "Organization",
+      "attributes": "Attributes37"
+    },
+    {
+      "id": "node38",
+      "name": "Name38",
+      "type": "Organization",
+      "attributes": "Attributes38"
+    },
+    {
+      "id": "node39",
+      "name": "Name39",
+      "type": "Person",
+      "attributes": "Attributes39"
+    },
+    {
+      "id": "node40",
+      "name": "Name40",
+      "type": "Person",
+      "attributes": "Attributes40"
+    },
+    {
+      "id": "node41",
+      "name": "Name41",
+      "type": "Organization",
+      "attributes": "Attributes41"
+    },
+    {
+      "id": "node42",
+      "name": "Name42",
+      "type": "Person",
+      "attributes": "Attributes42"
+    },
+    {
+      "id": "node43",
+      "name": "Name43",
+      "type": "Organization",
+      "attributes": "Attributes43"
+    },
+    {
+      "id": "node44",
+      "name": "Name44",
+      "type": "Person",
+      "attributes": "Attributes44"
+    },
+    {
+      "id": "node45",
+      "name": "Name45",
+      "type": "Person",
+      "attributes": "Attributes45"
+    },
+    {
+      "id": "node46",
+      "name": "Name46",
+      "type": "Organization",
+      "attributes": "Attributes46"
+    },
+    {
+      "id": "node47",
+      "name": "Name47",
+      "type": "Organization",
+      "attributes": "Attributes47"
+    },
+    {
+      "id": "node48",
+      "name": "Name48",
+      "type": "Person",
+      "attributes": "Attributes48"
+    },
+    {
+      "id": "node49",
+      "name": "Name49",
+      "type": "Person",
+      "attributes": "Attributes49"
+    },
+    {
+      "id": "node50",
+      "name": "Name50",
+      "type": "Person",
+      "attributes": "Attributes50"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "node39",
+      "target": "node47",
+      "type": "Colleague",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node34",
+      "target": "node2",
+      "type": "Employee",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node46",
+      "target": "node41",
+      "type": "Employee",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node7",
+      "target": "node48",
+      "type": "Colleague",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node9",
+      "target": "node19",
+      "type": "Employee",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node22",
+      "target": "node6",
+      "type": "Friend",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node6",
+      "target": "node1",
+      "type": "Partner",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node3",
+      "target": "node6",
+      "type": "Partner",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node12",
+      "target": "node48",
+      "type": "Partner",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node32",
+      "target": "node8",
+      "type": "Friend",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node19",
+      "target": "node49",
+      "type": "Employee",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node44",
+      "target": "node42",
+      "type": "Employee",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node28",
+      "target": "node6",
+      "type": "Employee",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node44",
+      "target": "node5",
+      "type": "Partner",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node31",
+      "target": "node46",
+      "type": "Friend",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node47",
+      "target": "node41",
+      "type": "Friend",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node11",
+      "target": "node26",
+      "type": "Employee",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node36",
+      "target": "node7",
+      "type": "Friend",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node29",
+      "target": "node2",
+      "type": "Partner",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node2",
+      "target": "node29",
+      "type": "Friend",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node44",
+      "target": "node33",
+      "type": "Employee",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node45",
+      "target": "node31",
+      "type": "Friend",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node16",
+      "target": "node42",
+      "type": "Colleague",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node41",
+      "target": "node20",
+      "type": "Partner",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node26",
+      "target": "node4",
+      "type": "Friend",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node32",
+      "target": "node15",
+      "type": "Colleague",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node6",
+      "target": "node38",
+      "type": "Colleague",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node19",
+      "target": "node28",
+      "type": "Colleague",
+      "attributes": "Random attributes"
+    },
+    {
+      "source": "node30",
+      "target": "node21",
+      "type": "Partner",
+      "attributes": "Random attributes"
+    }
+  ]
+}

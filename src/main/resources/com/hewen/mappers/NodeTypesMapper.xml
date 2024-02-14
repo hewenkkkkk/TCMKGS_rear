@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hewen.mappers.NodeTypesMapper">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="com.hewen.entity.po.NodeTypes">
+		<!---->
+		<id column="type_id" property="typeId"  />
+		<!---->
+		<result column="type_name" property="typeName"  />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="base_column_list">
+		 type_id,type_name
+	</sql>
+
+	<sql id="base_condition_filed">
+			<if test="query.typeId != null">
+				 and  type_id = #{query.typeId}
+			</if>
+			<if test="query.typeName != null and query.typeName!=''">
+				 and  type_name = #{query.typeName}
+			</if>
+	</sql>
+	<!-- 通用条件列-->
+	<sql id="base_condition">
+	 <where>
+		 <include refid="base_condition_filed" />
+	 </where>
+	</sql>
+
+	<!-- 通用查询条件列-->
+	<sql id="query_condition">
+	 <where>
+			<include refid="base_condition_filed" />
+			<if test="query.typeNameFuzzy!= null  and query.typeNameFuzzy!=''">
+				 and  type_name like concat('%', #{query.typeNameFuzzy}, '%')
+			</if>
+	 </where>
+	</sql>
+
+	<!-- 查询集合-->
+	<select id="selectList" resultMap="base_result_map" >
+		 SELECT <include refid="base_column_list" /> FROM node_types <include refid="query_condition" />
+		 <if test="query.orderBy!=null">
+			 order by ${query.orderBy}
+		 </if>
+		 <if test="query.simplePage!=null">
+			 limit #{query.simplePage.start},#{query.simplePage.end}
+		 </if>
+	</select>
+
+	<!-- 查询数量-->
+	<select id="selectCount" resultType="java.lang.Integer" >
+		 SELECT count(1) FROM node_types <include refid="query_condition" />
+	</select>
+
+	<!-- 插入 （匹配有值的字段）-->
+	<insert id="insert" parameterType="com.hewen.entity.po.NodeTypes">
+		<selectKey keyProperty="bean.typeId" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		 INSERT INTO node_types
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="bean.typeName != null">
+				 type_name,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="bean.typeName!=null">
+				 #{bean.typeName},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 插入或者更新 （匹配有值的字段）-->
+	<insert id="insertOrUpdate" parameterType="com.hewen.entity.po.NodeTypes">
+		 INSERT INTO node_types
+		 <trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="bean.typeId != null">
+				 type_id,
+			</if>
+			<if test="bean.typeName != null">
+				 type_name,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="bean.typeId!=null">
+				 #{bean.typeId},
+			</if>
+			<if test="bean.typeName!=null">
+				 #{bean.typeName},
+			</if>
+		 </trim>
+		 on DUPLICATE key update 
+		 <trim prefix="" suffix="" suffixOverrides=",">
+			<if test="bean.typeName!=null">
+				 type_name = VALUES(type_name),
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 添加 （批量插入）-->
+	<insert id="insertBatch" parameterType="com.hewen.entity.po.NodeTypes" useGeneratedKeys="true" keyProperty="typeId">
+		 INSERT INTO node_types(
+			 type_name
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.typeName}
+			 )
+		 </foreach>
+	</insert>
+
+	<!-- 批量新增修改 （批量插入）-->
+	<insert id="insertOrUpdateBatch" parameterType="com.hewen.entity.po.NodeTypes">
+		 INSERT INTO node_types(
+			 type_name
+		 )values
+		 <foreach collection="list" item="item" separator=",">
+			 (
+				 #{item.typeName}
+			 )
+		 </foreach>
+			on DUPLICATE key update 
+			type_name = VALUES(type_name)
+	</insert>
+
+	<!--多条件修改-->
+	<update id="updateByParam" parameterType="com.hewen.entity.query.NodeTypesQuery">
+		 UPDATE node_types
+ 		 <set> 
+			<if test="bean.typeName != null">
+				 type_name = #{bean.typeName},
+			</if>
+ 		 </set>
+ 		 <include refid="query_condition" />
+	</update>
+
+	<!--多条件删除-->
+	<delete id="deleteByParam">
+		 delete from node_types
+ 		 <include refid="query_condition" />
+	</delete>
+
+	<!-- 根据TypeId修改-->
+	<update id="updateByTypeId" parameterType="com.hewen.entity.po.NodeTypes">
+		 UPDATE node_types
+ 		 <set> 
+			<if test="bean.typeName != null">
+				 type_name = #{bean.typeName},
+			</if>
+ 		 </set>
+ 		 where type_id=#{typeId}
+	</update>
+
+	<!-- 根据TypeId删除-->
+	<delete id="deleteByTypeId">
+		delete from node_types where type_id=#{typeId}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectByTypeId" resultMap="base_result_map" >
+		select <include refid="base_column_list" /> from node_types where type_id=#{typeId}
+	</select>
+
+	<!-- 根据TypeName修改-->
+	<update id="updateByTypeName" parameterType="com.hewen.entity.po.NodeTypes">
+		 UPDATE node_types
+ 		 <set> 
+ 		 </set>
+ 		 where type_name=#{typeName}
+	</update>
+
+	<!-- 根据TypeName删除-->
+	<delete id="deleteByTypeName">
+		delete from node_types where type_name=#{typeName}
+	</delete>
+
+	<!-- 根据PrimaryKey获取对象-->
+	<select id="selectByTypeName" resultMap="base_result_map" >
+		select <include refid="base_column_list" /> from node_types where type_name=#{typeName}
+	</select>
+
+	<select id="exists" resultType="boolean">
+		SELECT COUNT(*) > 0 FROM node_types WHERE type_name = #{type}
+	</select>
+
+	<!-- 获取所有类型 -->
+	<select id="selectAllTypes" resultType="string">
+		SELECT type_name FROM node_types
+	</select>
+
+</mapper>

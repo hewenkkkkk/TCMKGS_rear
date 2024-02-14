@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    {
+      "id": "node1",
+      "name": "Example Node 1",
+      "label": "Node"
+    },
+    {
+      "id": "node2",
+      "name": "Example Node 2",
+      "label": "Node"
+    }
+  ],
+  "edges": [
+    {
+      "source": "node1",
+      "target": "node2",
+      "type": "RELATIONSHIP_TYPE"
+    }
+  ]
+}
