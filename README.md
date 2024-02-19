@@ -10,6 +10,12 @@
 1. JDK 17
 2. neo4j-community-4.4.18
 
+### 代办事项
+
+- [ ] 聊天室功能
+- [ ] 个人中心
+- [ ] 接口权限
+
 
 ### 运行效果
 ![Alternative text](data/readmepic/img.png)
