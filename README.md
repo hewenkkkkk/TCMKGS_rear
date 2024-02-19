@@ -9,3 +9,9 @@
 ### 版本说明
 1. JDK 17
 2. neo4j-community-4.4.18
+
+
+### 运行效果
+![Alternative text](data/readmepic/img.png)
+![Alternative text](data/readmepic/img_1.png)
+![Alternative text](data/readmepic/img_2.png)

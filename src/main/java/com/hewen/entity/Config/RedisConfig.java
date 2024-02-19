@@ -1,4 +1,4 @@
-package com.hewen.Config;
+package com.hewen.entity.Config;
 
 
 import org.springframework.context.annotation.Bean;

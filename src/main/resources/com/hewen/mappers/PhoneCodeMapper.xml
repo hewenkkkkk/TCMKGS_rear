@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hewen.mappers.PhoneCodeMapper">
+
+    <!-- 插入 （匹配有值的字段）-->
+    <insert id="insert" parameterType="com.hewen.entity.po.PhoneCode">
+        INSERT INTO phone_code
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="bean.phone != null">
+                phone,
+            </if>
+            <if test="bean.code != null">
+                code,
+            </if>
+            <if test="bean.createTime != null">
+                create_time,
+            </if>
+            <if test="bean.status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="bean.phone!=null">
+                #{bean.phone},
+            </if>
+            <if test="bean.code!=null">
+                #{bean.code},
+            </if>
+            <if test="bean.createTime!=null">
+                #{bean.createTime},
+            </if>
+            <if test="bean.status!=null">
+                #{bean.status},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateStatusByCode">
+        UPDATE phone_code SET status = 1 WHERE code = #{code}
+    </update>
+    <select id="selectCodeByPhone" resultType="java.lang.String">
+        SELECT code FROM phone_code WHERE phone = #{phone} AND status = 0 ORDER BY create_time DESC LIMIT 1
+    </select>
+
+</mapper>

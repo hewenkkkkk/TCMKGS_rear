@@ -14,12 +14,6 @@ import javax.imageio.stream.ImageOutputStream;
 
 public class AvatarGenerator {
 
-    public static void main(String[] args) {
-        String input = "jkj"; // 示例输入字符串
-
-        generateAvatar(input, "lf");
-    }
-
     public static String generateAvatar(String str, String picName) {
         String outputPath = "src/main/resources/static/img/" + picName + ".webp"; // 指定保存图像的路径
 
@@ -64,8 +58,8 @@ public class AvatarGenerator {
             AliyunOSSUtil aliyunOSSUtil = new AliyunOSSUtil();
             String ossUrl = aliyunOSSUtil.uploadFile(multipartFile);
 
-            System.out.println("头像已保存到: " + outputPath);
-            System.out.println("头像地址: " + ossUrl);
+//            System.out.println("头像已保存到: " + outputPath);
+//            System.out.println("oss头像地址: " + ossUrl);
 
             // 删除临时文件
             outputFile.delete();
